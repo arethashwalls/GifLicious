@@ -4,12 +4,17 @@ $(document).ready(function () {
         'ice cream', 'bagel', 'dumplings']
     var key = 'YO1V30OsrDmHaofembwPUeRHKrS1WYDB';
 
-    for (let i = 0; i < topics.length; i++) {
-        //For each topic, create a button, give it the 'gif-button' class, and set the data-topic attribute:
-        var $newButton = $('<button>').text(topics[i]).addClass('gif-button').attr('data-topic', topics[i]);
-        // $('.button-box').append($newButton);
-        $newButton.appendTo($('.button-box'))
+    function makeButtons(arr) {
+        var $buttonDiv = $('<div>');
+        for(let i = 0; i < arr.length; i++) {
+            $buttonDiv.append( 
+                $('<button>').text(arr[i]).addClass('gif-button').attr('data-topic', arr[i])
+            );
+        }
+        return $buttonDiv;
     }
+
+    $('.button-box').html(makeButtons(topics).html());
 
     $('.button-box').on('click', '.gif-button', function() {
         $.ajax({
@@ -45,6 +50,14 @@ $(document).ready(function () {
         } else {
             $(this).attr('src', $(this).attr('data-still-src'));
         }
+    });
+
+    $('#topic-submit').on('click', function(e){
+        e.preventDefault();
+        topics.push(
+            $('#topic-input').val().trim().toLowerCase()
+        );
+        $('.button-box').html(makeButtons(topics).html());
     });
 
 });
