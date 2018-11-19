@@ -21,7 +21,10 @@ $(document).ready(function () {
     function makeGifs(gifData) {
         var $gifsBox = $('<div>');
         for (let i = 0; i < gifData.length; i++) {
-            var $gifDiv = $('<div>').addClass('gif-div');
+            var $gifDiv = $('<div>').attr({
+                'class' : 'gif-div',
+                'id' : 'gif-div-' + (offset + i)
+            });
             $gifDiv.append($('<img>').attr({
                 'class': 'gif',
                 'src': gifData[i].images.original_still.url,
@@ -38,6 +41,10 @@ $(document).ready(function () {
                     gifData[i].user.username + '</a></p>'
                 );
             }
+            $gifDiv.append($('<button>').text('Delicious!').attr({
+                'class' : 'fave-button',
+                'data-target' : 'gif-div-' + (offset + i)
+            }))
             $gifsBox.append($gifDiv);
         }
         return $gifsBox;
@@ -45,6 +52,15 @@ $(document).ready(function () {
 
     //Call makeButtons with the initial topics array:
     $('.button-box').html(makeButtons(topics).html());
+
+    //The topic-submit button lets users add new topics and remakes the button-box accordingly:
+    $('#topic-submit').on('click', function (e) {
+        e.preventDefault();
+        topics.push(
+            $('#topic-input').val().trim().toLowerCase()
+        );
+        $('.button-box').html(makeButtons(topics).html());
+    });
 
     //Clicking a button calls for ten gifs from GIPHY and adds them to the gif box:
     $('.container').on('click', '.gif-button', function () {
@@ -59,6 +75,7 @@ $(document).ready(function () {
             }
             $('.gif-box').append(makeGifs(response.data).html());
             offset += 10;
+            $('#more-button').remove();
             $('.gif-box').append(
                 $('<button>').text('Still hungry!').attr({
                     'class': 'gif-button',
@@ -71,7 +88,7 @@ $(document).ready(function () {
     });
 
     //Clicking on a gif toggles its animation:
-    $('.gif-box').on('click', '.gif', function () {
+    $('.container').on('click', '.gif', function () {
         if ($(this).attr('src') === $(this).attr('data-still-src')) {
             $(this).attr('src', $(this).attr('data-animate-src'));
         } else {
@@ -79,13 +96,9 @@ $(document).ready(function () {
         }
     });
 
-    //The topic-submit button lets users add new topics and remakes the button-box accordingly:
-    $('#topic-submit').on('click', function (e) {
-        e.preventDefault();
-        topics.push(
-            $('#topic-input').val().trim().toLowerCase()
-        );
-        $('.button-box').html(makeButtons(topics).html());
-    });
+    $('.gif-box').on('click', '.fave-button', function() {
+        $('#' + $(this).attr('data-target')).clone().appendTo('.fave-box');
+        $('.fave-box .fave-button').remove();
+    })
 
 });
