@@ -1,0 +1,21 @@
+@font-face {
+    font-family: LakeshoreDrive;
+    src: url(web-fonts/lakeshoredrive_regular_ubasic/LAKESHOR-webfont.woff) format('woff');
+}
+
+body {
+    background: #E01A4F;
+}
+
+header {
+    height: 12em;
+    background-image: url(../images/header-bkgd.png);
+    background-size: 100% 100%;
+}
+
+h1 {
+    font-family: LakeshoreDrive;
+    font-size: 6em;
+    color: #880044;
+    text-align: center;
+}

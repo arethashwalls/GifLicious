@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $('.fave-title, .gif-title').hide();
+
     //An array of all 
     var topics = ['noodles', 'taco', 'burger', 'sushi', 'fondue', 'chocolate', 'steak',
         'ice cream', 'bagel', 'dumplings']
@@ -19,21 +21,27 @@ $(document).ready(function () {
 
     //makeGifs returns a div filled with still gifs and an appropriate caption from GIPHY's data:
     function makeGifs(gifData) {
+        //Create a new div to hold all the contents:
         var $gifsBox = $('<div>');
+        //For each item in the data array:
         for (let i = 0; i < gifData.length; i++) {
+            //Create a new for that item with an ID for tracking it:
             var $gifDiv = $('<div>').attr({
                 'class' : 'gif-div',
                 'id' : 'gif-div-' + (offset + i)
             });
+            //Add the still image, include a link to the animated image:
             $gifDiv.append($('<img>').attr({
                 'class': 'gif',
                 'src': gifData[i].images.original_still.url,
                 'data-still-src': gifData[i].images.original_still.url,
                 'data-animate-src': gifData[i].images.original.url
             }),
+            //Add a caption with the title and rating:
                 '<h3>' + gifData[i].title + '</h3>' +
                 '<p><strong>Rating:</strong> ' + gifData[i].rating.toUpperCase() + '</p>'
             );
+            //Add a link to the creator's profile, if that gif lists a creator:
             if (gifData[i].hasOwnProperty('user')) {
                 $gifDiv.append(
                     '<p><strong>Creator:</strong> <a href="' +
@@ -41,6 +49,7 @@ $(document).ready(function () {
                     gifData[i].user.username + '</a></p>'
                 );
             }
+            //Add a favorite button with a reference to the div's ID:
             $gifDiv.append($('<button>').text('Delicious!').attr({
                 'class' : 'fave-button',
                 'data-target' : 'gif-div-' + (offset + i)
@@ -65,17 +74,24 @@ $(document).ready(function () {
     //Clicking a button calls for ten gifs from GIPHY and adds them to the gif box:
     $('.container').on('click', '.gif-button', function () {
         var $that = $(this);
+        $('.gif-title').show();
+        //For every button but the more-button, clear the existing GIFs and reset offset:
+        if($that.attr('id') !== 'more-button') {
+            $('.gif-box').empty();
+            offset = 0;
+        }
         $.ajax({
             url: 'https://api.giphy.com/v1/gifs/search?api_key=' + key +
                 '&q=' + $that.attr('data-topic') + '&limit=10&offset=' + offset,
             method: 'GET'
         }).then(function (response) {
-            if($that.attr('id') !== 'more-button') {
-                $('.gif-box').empty();
-            }
+            //Append the 10 new gifs with makeGIFs:
             $('.gif-box').append(makeGifs(response.data).html());
+            //Increment offset by 10:
             offset += 10;
-            $('#more-button').remove();
+            //Remove the current more-button:
+           $ ('#more-button').remove();
+            //And create a new one at the end of the list:
             $('.gif-box').append(
                 $('<button>').text('Still hungry!').attr({
                     'class': 'gif-button',
@@ -96,9 +112,11 @@ $(document).ready(function () {
         }
     });
 
+    //Clicking the favorite button will add that gif and it's caption to the favorites section:
     $('.gif-box').on('click', '.fave-button', function() {
+        $('.fave-title').show();
         $('#' + $(this).attr('data-target')).clone().appendTo('.fave-box');
         $('.fave-box .fave-button').remove();
-    })
+    });
 
 });
