@@ -1,21 +1,78 @@
+/* Global Styles **************************************************************************/
 @font-face {
     font-family: LakeshoreDrive;
-    src: url(web-fonts/lakeshoredrive_regular_ubasic/LAKESHOR-webfont.woff) format('woff');
+    src: url(web-fonts/LAKESHOR-webfont.woff) format('woff');
 }
+@font-face {
+    font-family: CherrySwash;
+    src: url('web-fonts/cherryswash-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 
+}
+body, html {
+    width: 100vw;
+}
 body {
     background: #E01A4F;
 }
 
+/* Header Styles *************************************************************************/
 header {
     height: 12em;
     background-image: url(../images/header-bkgd.png);
     background-size: 100% 100%;
 }
-
 h1 {
     font-family: LakeshoreDrive;
-    font-size: 6em;
+    font-size: 6rem;
     color: #880044;
     text-align: center;
+    line-height: 1.5em;
+    letter-spacing: -5px;
+}
+
+/* Body Styles ***************************************************************************/
+.container {
+    width: 80%;
+    margin: auto;
+}
+h2{
+    font-family: CherrySwash;
+    font-size: 2em;
+    color: #12123D;
+}
+.gif-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items:flex-start;
+}
+.gif-div {
+    background: #FFE987;
+    max-width: 300px;
+    height: auto;
+    padding: 30px;
+    margin: 10px;
+    border-radius: 10px;
+}
+.gif {
+    max-width: 100%;
+}
+
+/* FaveBox Styles **************************************************************************/
+.fave-box {
+    float: right;
+    width: 20%;
+    background: #880044;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.fave-box .gif-div {
+    margin: 20px 0;
+}
+
+.fave-title {
+    color: #FFE987;
+    font-size: 1.5em;
 }

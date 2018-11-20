@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $('.fave-title, .gif-title').hide();
+    $('.fave-box, .gif-title').hide();
 
     //An array of all 
     var topics = ['noodles', 'taco', 'burger', 'sushi', 'fondue', 'chocolate', 'steak',
@@ -114,8 +114,8 @@ $(document).ready(function () {
 
     //Clicking the favorite button will add that gif and it's caption to the favorites section:
     $('.gif-box').on('click', '.fave-button', function() {
-        $('.fave-title').show();
-        $('#' + $(this).attr('data-target')).clone().appendTo('.fave-box');
+        $('.fave-box').show();
+        $('#' + $(this).attr('data-target')).clone().removeAttr('id').appendTo('.fave-box');
         $('.fave-box .fave-button').remove();
     });
 
