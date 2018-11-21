@@ -2,4 +2,6 @@
 
 ## TODO
 * ~~Sometimes, clicking 'fave' adds the wrong gif when multiple topics have loaded.~~
-* Add local storage thing
+* ~~Add local storage thing~~
+* Re-comment and write-up documentation
+* Clean stylesheet
