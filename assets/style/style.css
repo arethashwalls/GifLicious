@@ -11,11 +11,18 @@
 
 }
 body, html {
-    width: 100vw;
+    width: 100%;
+    height: auto;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', sans-serif; 
     font-size: 16px;
+    color: #12123D;
 }
 body {
-    background: #E01A4F;
+    background: linear-gradient(#880044, #E01A4F, #93E1D8);
+    background-attachment: fixed;
+}
+a {
+    color: #880044;
 }
 
 /* Header Styles *************************************************************************/
@@ -33,6 +40,23 @@ h1 {
     letter-spacing: -5px;
 }
 
+/* Button Styles *************************************************************************/
+button, #topic-submit {
+    padding: 5px 7px;
+    border-radius: 7px;
+    margin: 10px 7px 10px 0;
+    font-size: 1em;
+    border: 2px solid #880044;
+}
+.button-box button, #topic-submit {
+    background: #93E1D8;
+}
+.fave-button {
+    background: #E01A4F;
+    float: right;
+}
+
+
 /* Body Styles ***************************************************************************/
 .container {
     width: 80%;
@@ -40,22 +64,28 @@ h1 {
 }
 h2{
     font-size: 2em;
+    line-height: 2em;
+    text-align: center;
 }
-h2, h3{
+h2.fave-title {
+    line-height: 1em;
+}
+h2, h3, #more-button{
     font-family: CherrySwash;
     color: #12123D;
 }
-h3 {
+h3, #more-button {
     font-size: 1.5em;
 }
-
+h3 {
+    line-height: 1.5em;
+}
 .gif-box {
     display: flex;
     flex-wrap: wrap;
     align-items:flex-start;
 }
-.gif-div {
-    background: #FFE987;
+.gif-div, #more-button {
     max-width: 300px;
     height: auto;
     padding: 30px;
@@ -65,6 +95,41 @@ h3 {
 .gif {
     max-width: 100%;
 }
+.gif-div, .button-box, .form-box, #more-button {
+    background: #FFE987;
+}
+#more-button {
+    border: none;
+}
+
+/* ButtonBox and FormBox Styles ************************************************************/
+.button-box, .form-box {
+    display: inline-block;
+    margin: 10px auto;
+    padding: 15px 10px;;
+    border-radius: 10px;
+    text-align: center;
+}
+.form-box {
+    margin-left: 20px;
+}
+.centering-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+label {
+    font-size: 1.2em;
+    color: #12123D;
+}
+#topic-input {
+    margin: 15px 0 10px 0;
+    padding: 3px 5px;
+    border: 2px solid #880044;
+    border-radius: 7px;
+    background: #93E1D8;
+    font-size: 1.2em;
+}
 
 /* FaveBox Styles **************************************************************************/
 .fave-box {
@@ -73,13 +138,16 @@ h3 {
     background: #880044;
     padding: 30px;
     border-radius: 10px;
+    margin-top: 20px;
 }
-
 .fave-box .gif-div {
     margin: 20px 0;
 }
-
 .fave-title {
     color: #FFE987;
     font-size: 1.5em;
+}
+.fave-box h3 {
+    line-height: 1em;
+    font-size: 1em;
 }

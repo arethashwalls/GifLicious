@@ -2,11 +2,38 @@ $(document).ready(function () {
 
     $('.fave-box, .gif-title').hide();
 
-    //An array of all 
+    //An array of all possible topics:
     var topics = ['noodles', 'taco', 'burger', 'sushi', 'fondue', 'chocolate', 'steak',
         'ice cream', 'bagel', 'dumplings']
     var key = 'YO1V30OsrDmHaofembwPUeRHKrS1WYDB';
     var offset = 0;
+    var localCount = (localStorage.getItem('localCount') || 0);
+
+    //storageAvailable testing function from MDN
+    //[https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API]
+    function storageAvailable(type) {
+        try {
+            var storage = window[type],
+                x = '__storage_test__';
+            storage.setItem(x, x);
+            storage.removeItem(x);
+            return true;
+        }
+        catch(e) {
+            return e instanceof DOMException && (
+                // everything except Firefox
+                e.code === 22 ||
+                // Firefox
+                e.code === 1014 ||
+                // test name field too, because code might not be present
+                // everything except Firefox
+                e.name === 'QuotaExceededError' ||
+                // Firefox
+                e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+                // acknowledge QuotaExceededError only if there's something already stored
+                storage.length !== 0;
+        }
+    }
 
     //makeButtons returns a div filled with a button for each topic in topics:
     function makeButtons(arr) {
@@ -111,12 +138,30 @@ $(document).ready(function () {
             $(this).attr('src', $(this).attr('data-still-src'));
         }
     });
-
+    
+   
     //Clicking the favorite button will add that gif and it's caption to the favorites section:
     $('.gif-box').on('click', '.fave-button', function() {
-        $('.fave-box').show();
-        $('#' + $(this).attr('data-target')).clone().removeAttr('id').appendTo('.fave-box');
-        $('.fave-box .fave-button').remove();
+        let $thisGifDiv = $('#' + $(this).attr('data-target'));
+        if(storageAvailable('localStorage')) {
+            // localStorage.setItem('src' + localCount, $thisGifDiv.children('.gif').attr('src'));
+            // localStorage.setItem('title' + localCount, $thisGifDiv.children('h3').text());
+            // localStorage.setItem('caption' + localCount, $thisGifDiv.children('p').html());
+            localStorage.setItem('gifDiv-' + localCount, $thisGifDiv.html());
+            localCount++;
+            $('.fave-box').show();
+            $('.all-faves').empty();
+            for(let i = 0; i < localStorage.length; i++) {
+                $('.all-faves').append(
+                    $('<div>').html(localStorage.getItem('gifDiv-' + i)).addClass('gif-div')
+                );   
+            }
+            $('.fave-box .fave-button').remove();
+        } else {
+            $('.fave-box').show();
+            $thisGifDiv.clone().removeAttr('id').appendTo('.all-faves');
+            $('.fave-box .fave-button').remove();
+        }
     });
 
 });
