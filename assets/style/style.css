@@ -12,6 +12,7 @@
 }
 body, html {
     width: 100vw;
+    font-size: 16px;
 }
 body {
     background: #E01A4F;
@@ -38,10 +39,16 @@ h1 {
     margin: auto;
 }
 h2{
-    font-family: CherrySwash;
     font-size: 2em;
+}
+h2, h3{
+    font-family: CherrySwash;
     color: #12123D;
 }
+h3 {
+    font-size: 1.5em;
+}
+
 .gif-box {
     display: flex;
     flex-wrap: wrap;
