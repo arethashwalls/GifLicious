@@ -41,14 +41,21 @@ h1 {
 }
 
 /* Button Styles *************************************************************************/
-button, #topic-submit {
+button, #topic-submit, #clear-faves {
     padding: 5px 7px;
     border-radius: 7px;
     margin: 10px 7px 10px 0;
     font-size: 1em;
+}
+button, #topic-submit {
     border: 2px solid #880044;
 }
-.button-box button, #topic-submit {
+#clear-faves {
+    border: 2px solid #FFE987;
+    display: block;
+    margin: 0 auto;
+}
+.button-box button, #topic-submit, #clear-faves {
     background: #93E1D8;
 }
 .fave-button {

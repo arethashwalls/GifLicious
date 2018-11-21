@@ -1,14 +1,20 @@
 $(document).ready(function () {
 
-    $('.fave-box, .gif-title').hide();
+    $('.gif-title').hide();
 
     //An array of all possible topics:
     var topics = ['noodles', 'taco', 'burger', 'sushi', 'fondue', 'chocolate', 'steak',
         'ice cream', 'bagel', 'dumplings']
     var key = 'YO1V30OsrDmHaofembwPUeRHKrS1WYDB';
     var offset = 0;
+
     var localCount = (localStorage.getItem('localCount') || 0);
     console.log(localCount);
+    if (localCount === 0) { 
+        $('.fave-box').hide();
+    } else {
+        loadLocalFaves();
+    }
 
     //storageAvailable testing function from MDN
     //[https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API]
@@ -20,7 +26,7 @@ $(document).ready(function () {
             storage.removeItem(x);
             return true;
         }
-        catch(e) {
+        catch (e) {
             return e instanceof DOMException && (
                 // everything except Firefox
                 e.code === 22 ||
@@ -34,6 +40,17 @@ $(document).ready(function () {
                 // acknowledge QuotaExceededError only if there's something already stored
                 storage.length !== 0;
         }
+    }
+
+    function loadLocalFaves() {
+        $('.fave-box').show();
+        $('.all-faves').empty();
+        for (let i = 0; i < localCount; i++) {
+            $('.all-faves').append(
+                $('<div>').html(localStorage.getItem('gifDiv-' + i)).addClass('gif-div')
+            );
+        }
+        $('.fave-box .fave-button').remove();
     }
 
     //makeButtons returns a div filled with a button for each topic in topics:
@@ -55,8 +72,8 @@ $(document).ready(function () {
         for (let i = 0; i < gifData.length; i++) {
             //Create a new for that item with an ID for tracking it:
             var $gifDiv = $('<div>').attr({
-                'class' : 'gif-div',
-                'id' : 'gif-div-' + (offset + i)
+                'class': 'gif-div',
+                'id': 'gif-div-' + (offset + i)
             });
             //Add the still image, include a link to the animated image:
             $gifDiv.append($('<img>').attr({
@@ -65,7 +82,7 @@ $(document).ready(function () {
                 'data-still-src': gifData[i].images.original_still.url,
                 'data-animate-src': gifData[i].images.original.url
             }),
-            //Add a caption with the title and rating:
+                //Add a caption with the title and rating:
                 '<h3>' + gifData[i].title + '</h3>' +
                 '<p><strong>Rating:</strong> ' + gifData[i].rating.toUpperCase() + '</p>'
             );
@@ -79,8 +96,8 @@ $(document).ready(function () {
             }
             //Add a favorite button with a reference to the div's ID:
             $gifDiv.append($('<button>').text('Delicious!').attr({
-                'class' : 'fave-button',
-                'data-target' : 'gif-div-' + (offset + i)
+                'class': 'fave-button',
+                'data-target': 'gif-div-' + (offset + i)
             }))
             $gifsBox.append($gifDiv);
         }
@@ -104,7 +121,7 @@ $(document).ready(function () {
         var $that = $(this);
         $('.gif-title').show();
         //For every button but the more-button, clear the existing GIFs and reset offset:
-        if($that.attr('id') !== 'more-button') {
+        if ($that.attr('id') !== 'more-button') {
             $('.gif-box').empty();
             offset = 0;
         }
@@ -118,16 +135,16 @@ $(document).ready(function () {
             //Increment offset by 10:
             offset += 10;
             //Remove the current more-button:
-           $ ('#more-button').remove();
+            $('#more-button').remove();
             //And create a new one at the end of the list:
             $('.gif-box').append(
                 $('<button>').text('Still hungry!').attr({
                     'class': 'gif-button',
-                    'id' : 'more-button',
+                    'id': 'more-button',
                     'data-topic': $that.attr('data-topic')
                 })
             );
-            
+
         });
     });
 
@@ -139,31 +156,30 @@ $(document).ready(function () {
             $(this).attr('src', $(this).attr('data-still-src'));
         }
     });
+
     
-   
+
+
     //Clicking the favorite button will add that gif and it's caption to the favorites section:
-    $('.gif-box').on('click', '.fave-button', function() {
+    $('.gif-box').on('click', '.fave-button', function () {
         let $thisGifDiv = $('#' + $(this).attr('data-target'));
-        if(storageAvailable('localStorage')) {
-            // localStorage.setItem('src' + localCount, $thisGifDiv.children('.gif').attr('src'));
-            // localStorage.setItem('title' + localCount, $thisGifDiv.children('h3').text());
-            // localStorage.setItem('caption' + localCount, $thisGifDiv.children('p').html());
+        if (storageAvailable('localStorage')) {
             localStorage.setItem('gifDiv-' + localCount, $thisGifDiv.html());
             localCount++;
             localStorage.setItem('localCount', localCount);
-            $('.fave-box').show();
-            $('.all-faves').empty();
-            for(let i = 0; i < localStorage.length; i++) {
-                $('.all-faves').append(
-                    $('<div>').html(localStorage.getItem('gifDiv-' + i)).addClass('gif-div')
-                );   
-            }
-            $('.fave-box .fave-button').remove();
+            loadLocalFaves();
         } else {
             $('.fave-box').show();
             $thisGifDiv.clone().removeAttr('id').appendTo('.all-faves');
             $('.fave-box .fave-button').remove();
         }
     });
+
+    $('#clear-faves').on('click', function(){
+        localStorage.clear();
+        localCount = 0;
+        $('.fave-box').hide();
+        console.log(localStorage)
+    })
 
 });
