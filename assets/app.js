@@ -8,6 +8,7 @@ $(document).ready(function () {
     var key = 'YO1V30OsrDmHaofembwPUeRHKrS1WYDB';
     var offset = 0;
     var localCount = (localStorage.getItem('localCount') || 0);
+    console.log(localCount);
 
     //storageAvailable testing function from MDN
     //[https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API]
@@ -149,6 +150,7 @@ $(document).ready(function () {
             // localStorage.setItem('caption' + localCount, $thisGifDiv.children('p').html());
             localStorage.setItem('gifDiv-' + localCount, $thisGifDiv.html());
             localCount++;
+            localStorage.setItem('localCount', localCount);
             $('.fave-box').show();
             $('.all-faves').empty();
             for(let i = 0; i < localStorage.length; i++) {
