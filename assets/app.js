@@ -82,6 +82,7 @@ $(document).ready(function () {
             $gifDiv.append($('<img>').attr({
                 'class': 'gif',
                 'src': gifData[i].images.original_still.url,
+                'alt': gifData[i].title,
                 'data-still-src': gifData[i].images.original_still.url,
                 'data-animate-src': gifData[i].images.original.url
             }),

@@ -66,7 +66,6 @@ button, #topic-submit, .save-link {
 .save-link {
     text-decoration: none;
     display: block;
-    margin: 0;
 }
 
 /* Body Styles ***************************************************************************/
@@ -168,4 +167,7 @@ label {
 .fave-box h3 {
     line-height: 1em;
     font-size: 1em;
+}
+.fave-box .save-link {
+    margin: 0;
 }
