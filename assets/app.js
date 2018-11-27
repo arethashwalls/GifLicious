@@ -101,7 +101,14 @@ $(document).ready(function () {
             $gifDiv.append($('<button>').text('Delicious!').attr({
                 'class': 'fave-button',
                 'data-target': 'gif-div-' + (offset + i)
-            }))
+            }));
+            //Add a download link:
+            $gifDiv.append($('<a>').text('▼').attr({
+                'class': 'save-link',
+                'href': gifData[i].images.original.url,
+                'download': gifData[i].title,
+                'target': '_blank'
+            }));
             $gifsBox.append($gifDiv);
         }
         return $gifsBox;

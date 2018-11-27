@@ -41,13 +41,13 @@ h1 {
 }
 
 /* Button Styles *************************************************************************/
-button, #topic-submit, #clear-faves {
+button, #topic-submit, #clear-faves, .save-link {
     padding: 5px 7px;
     border-radius: 7px;
     margin: 10px 7px 10px 0;
     font-size: 1em;
 }
-button, #topic-submit {
+button, #topic-submit, .save-link {
     border: 2px solid #880044;
 }
 #clear-faves {
@@ -58,11 +58,13 @@ button, #topic-submit {
 .button-box button, #topic-submit, #clear-faves {
     background: #93E1D8;
 }
-.fave-button {
+.fave-button, .save-link {
     background: #E01A4F;
     float: right;
 }
-
+.save-link {
+    text-decoration: none;
+}
 
 /* Body Styles ***************************************************************************/
 .container {
