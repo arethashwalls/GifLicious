@@ -132,6 +132,8 @@ h3 {
 }
 .centering-container {
     display: flex;
+    align-content: space-between;
+    flex-flow: row wrap;
     justify-content: center;
     align-items: center;
 }
@@ -170,4 +172,28 @@ label {
 }
 .fave-box .save-link {
     margin: 0;
+}
+
+/* Responsive Styles: ********************************************************************/
+@media screen and (max-width: 1300px) {
+    .button-box, .form-box {
+        width: 100%;
+    }
+    .fave-box {
+        float: none;
+        clear: both;
+    }
+    .fave-box, .all-faves {
+        width: inherit;
+    }
+    .all-faves {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    align-items:flex-start;
+    }
+    .fave-box .gif-div {
+        width: 100%;
+        margin-right: 20px;
+    }
 }
