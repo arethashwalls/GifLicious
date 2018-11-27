@@ -20,6 +20,7 @@ body, html {
 body {
     background: linear-gradient(#880044, #E01A4F, #93E1D8);
     background-attachment: fixed;
+    position: static;
 }
 a {
     color: #880044;
@@ -64,6 +65,8 @@ button, #topic-submit, .save-link {
 }
 .save-link {
     text-decoration: none;
+    display: block;
+    margin: 0;
 }
 
 /* Body Styles ***************************************************************************/
@@ -109,6 +112,12 @@ h3 {
 }
 #more-button {
     border: none;
+}
+/* Clearfix: */
+.gif-div:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 /* ButtonBox and FormBox Styles ************************************************************/
