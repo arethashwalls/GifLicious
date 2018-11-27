@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     $('.gif-title').hide();
 
     //An array of all possible topics:
@@ -8,8 +7,9 @@ $(document).ready(function () {
     var key = 'YO1V30OsrDmHaofembwPUeRHKrS1WYDB';
     var offset = 0;
 
+    //localCount holds the number of items currently in local storage and will persist:
     var localCount = (localStorage.getItem('localCount') || 0);
-    console.log(localCount);
+    //If there are currently no items in local storage, hide the favorites box:
     if (localCount === 0) { 
         $('.fave-box').hide();
     } else {
@@ -42,9 +42,11 @@ $(document).ready(function () {
         }
     }
 
+    //loadLocalFaves displays items saved in localStorage in the favorites box:
     function loadLocalFaves() {
         $('.fave-box').show();
         $('.all-faves').empty();
+        //localCount is used to loop through each item with the name 'gifDiv-i':
         for (let i = 0; i < localCount; i++) {
             $('.all-faves').append(
                 $('<div>').html(localStorage.getItem('gifDiv-' + i)).addClass('gif-div')
@@ -58,6 +60,7 @@ $(document).ready(function () {
         var $buttonDiv = $('<div>');
         for (let i = 0; i < arr.length; i++) {
             $buttonDiv.append(
+                //The topic appears both as the text and as a data attribute:
                 $('<button>').text(arr[i]).addClass('gif-button').attr('data-topic', arr[i])
             );
         }
@@ -157,12 +160,10 @@ $(document).ready(function () {
         }
     });
 
-    
-
-
     //Clicking the favorite button will add that gif and it's caption to the favorites section:
     $('.gif-box').on('click', '.fave-button', function () {
         let $thisGifDiv = $('#' + $(this).attr('data-target'));
+        //If local storage is available:
         if (storageAvailable('localStorage')) {
             localStorage.setItem('gifDiv-' + localCount, $thisGifDiv.html());
             localCount++;
@@ -175,11 +176,10 @@ $(document).ready(function () {
         }
     });
 
+    //The favorites box has a clear button that clears both the section and localStorage:
     $('#clear-faves').on('click', function(){
         localStorage.clear();
         localCount = 0;
         $('.fave-box').hide();
-        console.log(localStorage)
     })
-
 });
